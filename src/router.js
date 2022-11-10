@@ -5,7 +5,7 @@ const axios = require('axios');
 // ======= REQ ========
 let teamResponse = [];
 let matchResponse = [];
-let stadingsResponse = [];
+let standingsResponse = [];
 
 router.get('/team', async (req, res) => {
     teamResponse = await getApiData(teamResponse);
@@ -17,9 +17,9 @@ router.get('/match', async (req, res) => {
     res.status(200).send(matchResponse);
 });
 
-router.get('/stadings', async (req, res) => {
-    stadingsResponse = await getApiData(stadingsResponse);
-    res.status(200).send(stadingsResponse);
+router.get('/standings', async (req, res) => {
+    standingsResponse = await getApiData(standingsResponse);
+    res.status(200).send(standingsResponse);
 });
 
 function getApiData(data) {
