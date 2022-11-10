@@ -2,17 +2,21 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
-let teamResponse;
-
 // ======= REQ ========
-router.get('/team', (req, res) => {
-    axios({
-        method: 'get',
-        url: 'http://api.cup2022.ir/api/v1/team',
-    }).then(function (response) {
-        teamResponse = response.data;
-    });
-    res.status(200).send(teamResponse);
+router.get('/team', async (req, res) => {
+    const response = await getApiData();
+    res.status(200).send(response);
 });
+
+function getApiData() {
+    return (async () => {
+        try {
+            const response = await axios.get('http://api.cup2022.ir/api/v1/team')
+            return response.data;
+        } catch (error) {
+            return `Status ${error.response.status}: Muitas Requisições`;
+        }
+    })();
+}
 
 module.exports = router
