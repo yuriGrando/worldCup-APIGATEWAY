@@ -28,6 +28,7 @@ function getApiData(data) {
             const response = await axios.get('http://api.cup2022.ir/api/v1/team')
             return response.data;
         } catch (error) {
+            console.log(error.response.status)
             return data;
         }
     })();

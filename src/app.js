@@ -11,31 +11,48 @@ app.use(cors({
     credentials: true
 }))
 
-let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzY5MDljMTZjYWNjMDZmNDhlYWVkM2QiLCJpYXQiOjE2NjgwNDEyMTcsImV4cCI6MTY2ODEyNzYxN30.4w_uIllu4_E6b-IYd_-EK0duBZysPTgWNGzZ8PfnFfY'
+let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzY5MDljMTZjYWNjMDZmNDhlYWVkM2QiLCJpYXQiOjE2NjgxMjk4NDIsImV4cCI6MTY2ODIxNjI0Mn0.FEtUJEBvH2hmkAxVu5sluYS2M3Llh0Egfur4cxC34Mc'
+let login = {
+    email: 'yv.grando@gmail.com',
+    password: '1o*18*v9*'
+}
 
-cron.schedule('* 45 17 * * *', () => {
-    console.log('Gerando novo token');
-    console.log(token)
-    getToken();
-},{
+const getToken = cron.schedule('* 29 22 * * *', () => {
+    console.log('oi')
+    axios.post('http://api.cup2022.ir/api/v1/user/login', login).then((res)=>{
+        console.log('OK')
+        token = res.data.data.token;
+        console.log(token)
+        getToken.stop()
+    }).catch((err)=>{
+        console.log('erro')
+        console.log(err)
+    })
+
+}, {
     scheduled: true,
     timezone: "America/Sao_Paulo"
 });
 
-function getToken() {
-    return (async () => {
-        try {
-            const response = await axios.post('http://api.cup2022.ir/api/v1/user/login', {email: 'yv.grando@gmail.com', password: '1o*18*v9*'})
-            token = response.data.token;
-            console.log('entrou')
-        } catch (error) {
-            console.log('error')
-            await getToken()
-        }
-    })();
-}
+// function getToken() {
+//     return (async () => {
+//         try {
+//             await axios.post('http://api.cup2022.ir/api/v1/user/login', login).then((res)=>{
+//                 console.log('OK')
+//                 token = res.data.data.token;
+//                 console.log(token)
+//                 stop = true;
+//             })
+//
+//         } catch (error) {
+//             return error.response.status;
+//         }
+//     })();
+// }
 
-axios.defaults.headers.common = { 'Authorization': 'Bearer ' + token };
+axios.defaults.headers.common =
+    {'Authorization': `Bearer ${token}`}
+;
 
 app.use(router);
 
