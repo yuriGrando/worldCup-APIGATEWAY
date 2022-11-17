@@ -19,7 +19,6 @@ function handleAuthErrors(response, options) {
 router.all('*', async (req, res, next) => {
     const path = req.originalUrl.slice(9);
     const uri = `http://api.cup2022.ir${path}`;
-    console.log(axios.defaults.headers.common);
 
     /** @type {request.RequestPromiseOptions} options */
     const options = {
