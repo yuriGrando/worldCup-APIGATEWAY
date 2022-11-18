@@ -32,7 +32,7 @@ router.all('*', async (req, res, next) => {
         res.json(response);
     } catch (err) {
         if (err.statusCode) {
-            if (err.statusCode == 404) return handleAuthErrors(res, options);
+            if (err.statusCode == 401) return handleAuthErrors(res, options);
 
             return res.status(err.statusCode).send({
                 message: err.message
