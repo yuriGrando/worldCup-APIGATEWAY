@@ -10,7 +10,7 @@ const { tryJwtExpiration } = require('./utils/token.util')
 
 app.use(express.json());
 app.use(cors({
-    origin: ["http://localhost:3000", "http://localhost:8080", "http://localhost:4200"],
+    origin: "*",
     credentials: true
 }));
 
