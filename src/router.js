@@ -1,16 +1,37 @@
 const express = require('express');
 const router = express.Router();
-
-// ======= IMPORTS JSON ========
-const match = require("./data/match.json");
-const team = require("./data/team.json");
-const standings = require("./data/standings.json");
+const axios = require('axios');
 
 // ======= REQ ========
-router.get('/match', (req, res) => res.status(200).send(res.json(match)));
+let teamResponse = [];
+let matchResponse = [];
+let standingsResponse = [];
 
-router.get('/team', (req, res) => res.status(200).send(res.json(team)));
+router.get('/team', async (req, res) => {
+    teamResponse = await getApiData(teamResponse);
+    res.status(200).send(teamResponse);
+});
 
-router.get('/match', (req, res) => res.status(200).send(res.json(standings)));
+router.get('/match', async (req, res) => {
+    matchResponse = await getApiData(matchResponse);
+    res.status(200).send(matchResponse);
+});
+
+router.get('/standings', async (req, res) => {
+    standingsResponse = await getApiData(standingsResponse);
+    res.status(200).send(standingsResponse);
+});
+
+function getApiData(data) {
+    return (async () => {
+        try {
+            const response = await axios.get('http://api.cup2022.ir/api/v1/team')
+            return response.data;
+        } catch (error) {
+            console.log(error.response.status)
+            return data;
+        }
+    })();
+}
 
 module.exports = router
