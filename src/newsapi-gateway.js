@@ -5,7 +5,7 @@ const { getToken } = require('./utils/token.util');
 
 
 router.all('*', async (req, res, next) => {
-    const path = req.originalUrl.slice(9);
+    // const path = req.originalUrl.slice(9);
     const apiKey = "5f4abeb55e6346be9fc14dd577e45134"
     const uri = `https://newsapi.org/v2/${req.url}&apiKey=${apiKey}`;
 
