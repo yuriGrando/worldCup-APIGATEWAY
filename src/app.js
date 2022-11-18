@@ -3,7 +3,7 @@ const app = express();
 const router = require('./router')
 const cors = require('cors');
 
-const wordlGateway = require('./worldcup-gateway');
+const worldGateway = require('./worldcup-gateway');
 const newsapiGateway = require('./newsapi-gateway');
 const { tryJwtExpiration } = require('./utils/token.util')
 
@@ -19,7 +19,7 @@ global.sexo = "pau"
 tryJwtExpiration();
 
 // app.use(router);
-app.use("/wordlcup", wordlGateway);
+app.use("/worldcup", worldGateway);
 app.use("/newsapi", newsapiGateway);
 
 module.exports = app;
