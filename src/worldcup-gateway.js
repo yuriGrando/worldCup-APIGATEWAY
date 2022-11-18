@@ -6,6 +6,7 @@ const { getToken } = require('./utils/token.util');
 function handleAuthErrors(response, options) {
     try {
         getToken().then(async (resp) => {
+            options.headers = axios.defaults.headers.common;
             const data = await request(options);
             resolveResponse(response, data);
         }).catch((err) => {
