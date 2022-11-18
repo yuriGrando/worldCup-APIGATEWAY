@@ -6,14 +6,18 @@ const { getToken } = require('./utils/token.util');
 function handleAuthErrors(response, options) {
     try {
         getToken().then(async (resp) => {
-            const res = await request(options);
-            response.json(res);
+            const data = await request(options);
+            resolveResponse(response, data);
         }).catch((err) => {
             response.statusCode(500).send(err);
         });
     } catch (err) {
         response.send(err);
     }
+}
+
+function resolveResponse(response, data) {
+    response.json(JSON.parse(data))
 }
 
 router.all('*', async (req, res, next) => {
@@ -29,7 +33,7 @@ router.all('*', async (req, res, next) => {
 
     try {
         const response = await request(options);
-        res.json(response);
+        resolveResponse(res, response);
     } catch (err) {
         if (err.statusCode) {
             if (err.statusCode == 404) return handleAuthErrors(res, options);
