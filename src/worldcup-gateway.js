@@ -9,7 +9,7 @@ function handleAuthErrors(response, options) {
             const data = await request(options);
             resolveResponse(response, data);
         }).catch((err) => {
-            response.statusCode(500).send(err);
+            response.status(500).send(err);
         });
     } catch (err) {
         response.send(err);
